@@ -9,7 +9,7 @@
 	</state>
 	<state id="1" name="q1">
 		<x>1.0</x>
-		<y>0.0</y>
+		<y>33.0</y>
 		<final/>
 	</state>
 	<!--The list of transitions.-->
