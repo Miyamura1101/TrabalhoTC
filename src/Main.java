@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-
+        
         Automato automato = new Automato();
 
         Estado q0 = new Estado(0, "q0", true, false, 0, 0);
