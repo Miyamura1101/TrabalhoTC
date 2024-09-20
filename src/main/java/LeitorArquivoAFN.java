@@ -1,3 +1,4 @@
+package main.java;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -6,8 +7,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class ArquivoAFN {
-    public static Automato LerAFN() {
+public class LeitorArquivoAFN {
+    public Automato LerAFN() {
 
         Automato automatoAFN = new Automato();
         try {
@@ -52,7 +53,7 @@ public class ArquivoAFN {
 
                     /*getElementsByTagName é usado para pegar o conteudo dentron de elementos XML (<read>a</read>)*/
 
-                    int estado_Inicial = Integer.parseInt(elementoTransicao.getElementsByTagName("form").item(0).getTextContent());
+                    int estado_Inicial = Integer.parseInt(elementoTransicao.getElementsByTagName("from").item(0).getTextContent());
                     int estado_Final = Integer.parseInt(elementoTransicao.getElementsByTagName("to").item(0).getTextContent());
                     String simbulo = elementoTransicao.getElementsByTagName("read").item(0).getTextContent();
 

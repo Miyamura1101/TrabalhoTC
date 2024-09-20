@@ -1,3 +1,4 @@
+package main.java;
 public class Transicao {
 
     private int estado_Inicial; // Referente ao estado de origem

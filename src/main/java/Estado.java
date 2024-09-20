@@ -1,3 +1,4 @@
+package main.java;
 public class Estado {
    
     private int id; /* Valor que é olhado durante as Trancisões */
