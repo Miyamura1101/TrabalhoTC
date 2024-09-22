@@ -2,25 +2,143 @@
 	<type>fa</type>
 	<automaton>
 	<!--The list of state.-->
-	<state id="0" name="q0">
+	<state id="29824" name="[0, 1, 2]">
 		<x>0.0</x>
 		<y>0.0</y>
 		<initial/>
+		<final/>
 	</state>
-	<state id="1" name="q1">
-		<x>1.0</x>
-		<y>33.0</y>
+	<state id="32" name="[1]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="33" name="[2]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="30754" name="[1, 0, 2]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="963" name="[0, 2]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="29854" name="[0, 2, 1]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="1023" name="[2, 0]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
+		<final/>
+	</state>
+	<state id="31" name="[0]">
+		<x>0.0</x>
+		<y>0.0</y>
+		<initial/>
 		<final/>
 	</state>
 	<!--The list of transitions.-->
 	<transition>
-		<from>0</from>
-		<to>1</to>
+		<from>29824</from>
+		<to>33</to>
+		<read></read>
+	</transition>
+	<transition>
+		<from>29824</from>
+		<to>29854</to>
 		<read>a</read>
 	</transition>
 	<transition>
-		<from>0</from>
-		<to>0</to>
+		<from>29824</from>
+		<to>1023</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>33</from>
+		<to>32</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>29854</from>
+		<to>33</to>
+		<read></read>
+	</transition>
+	<transition>
+		<from>29854</from>
+		<to>29854</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>29854</from>
+		<to>1023</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>1023</from>
+		<to>30754</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>1023</from>
+		<to>33</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>32</from>
+		<to>33</to>
+		<read></read>
+	</transition>
+	<transition>
+		<from>32</from>
+		<to>31</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>30754</from>
+		<to>33</to>
+		<read></read>
+	</transition>
+	<transition>
+		<from>30754</from>
+		<to>29854</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>30754</from>
+		<to>963</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>31</from>
+		<to>963</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>31</from>
+		<to>33</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>963</from>
+		<to>29854</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>963</from>
+		<to>33</to>
 		<read>b</read>
 	</transition>
 	</automaton>
