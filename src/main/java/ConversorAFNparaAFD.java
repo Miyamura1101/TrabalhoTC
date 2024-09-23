@@ -2,6 +2,8 @@ package main.java;
 
 import java.util.*;
 
+import org.junit.platform.engine.support.store.NamespacedHierarchicalStore.CloseAction;
+
 public class ConversorAFNparaAFD {
     private Automato afn;
     private List<Transicao> transicoesAFD;
@@ -27,17 +29,20 @@ public class ConversorAFNparaAFD {
                 estadoInicial.add(estado.getId());
             }
         }
+        Collections.sort(estadoInicial);
         fila.add(estadoInicial);
         estadoMap.put(estadoInicial, estadoInicial.hashCode()); // Usa hashCode como ID temporário
 
         while (!fila.isEmpty()) {
-            List<Integer> estadoAtual = fila.poll();
+            List<Integer> estadoAtual = fila.poll(); // 
 
             // Obter destinos para cada símbolo
             for (String simbolo : getSimbolosTransicoes(estadoAtual)) {
                 List<Integer> destinos = obterDestinos(estadoAtual, simbolo);
 
                 if (!destinos.isEmpty()) {
+
+                    Collections.sort(destinos);
                     // Se os destinos ainda não foram mapeados, adicione à fila
                     if (!estadoMap.containsKey(destinos)) {
                         estadoMap.put(destinos, destinos.hashCode());
@@ -51,15 +56,7 @@ public class ConversorAFNparaAFD {
                 }
             }
         }
-
-        // Criação de estados AFD
-        for (Map.Entry<List<Integer>, Integer> entry : estadoMap.entrySet()) {
-            List<Integer> estados = entry.getKey();
-            boolean inicial = estados.stream().anyMatch(id -> afn.getEstados().stream().anyMatch(e -> e.getId() == id && e.getInicial()));
-            boolean finall = estados.stream().anyMatch(id -> afn.getEstados().stream().anyMatch(e -> e.getId() == id && e.isFinall()));
-            Estado novoEstado = new Estado(entry.getValue(), estados.toString(), inicial, finall, 0, 0); // A posição x,y é simplificada
-            // Adiciona o novo estado AFD
-        }
+        getAFD();
     }
 
     private Set<String> getSimbolosTransicoes(List<Integer> estados) {
@@ -92,8 +89,20 @@ public class ConversorAFNparaAFD {
         Automato afd = new Automato();
         for (Map.Entry<List<Integer>, Integer> entry : estadoMap.entrySet()) {
             List<Integer> estados = entry.getKey();
-            boolean inicial = estados.stream().anyMatch(id -> afn.getEstados().stream().anyMatch(e -> e.getId() == id && e.getInicial()));
-            boolean finall = estados.stream().anyMatch(id -> afn.getEstados().stream().anyMatch(e -> e.getId() == id && e.isFinall()));
+            boolean inicial = false;
+            for (Estado estado : afn.getEstados()) {
+                if (estado.getInicial() && estados.contains(estados)) {
+                    inicial = true;
+                    break;
+                }
+            }
+            boolean finall = false;
+            for (Estado estado2 : afn.getEstados()) {
+                if (estados.contains(estado2.getId())) {
+                    finall = true;
+                    break;
+                }
+            }
             Estado novoEstado = new Estado(entry.getValue(), estados.toString(), inicial, finall, 0, 0);
             afd.addEstado(novoEstado);
         }
