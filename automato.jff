@@ -1,82 +1,72 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- Created with JFLAP 7.1.--><structure>
-	<type>fa</type>
-	<automaton>
-	<!--The list of state.-->
-	<state id="29824" name="[0, 1, 2]">
-		<x>0.0</x>
-		<y>0.0</y>
-		<final/>
-	</state>
-	<state id="32" name="[1]">
-		<x>0.0</x>
-		<y>0.0</y>
-		<final/>
-	</state>
-	<state id="33" name="[2]">
-		<x>0.0</x>
-		<y>0.0</y>
-		<final/>
-	</state>
-	<state id="963" name="[0, 2]">
-		<x>0.0</x>
-		<y>0.0</y>
-		<final/>
-	</state>
-	<state id="31" name="[0]">
-		<x>0.0</x>
-		<y>0.0</y>
-		<final/>
-	</state>
-	<!--The list of transitions.-->
-	<transition>
-		<from>29824</from>
-		<to>33</to>
-		<read></read>
-	</transition>
-	<transition>
-		<from>29824</from>
-		<to>29824</to>
-		<read>a</read>
-	</transition>
-	<transition>
-		<from>29824</from>
-		<to>963</to>
-		<read>b</read>
-	</transition>
-	<transition>
-		<from>33</from>
-		<to>32</to>
-		<read>a</read>
-	</transition>
-	<transition>
-		<from>963</from>
-		<to>29824</to>
-		<read>a</read>
-	</transition>
-	<transition>
-		<from>963</from>
-		<to>33</to>
-		<read>b</read>
-	</transition>
-	<transition>
-		<from>32</from>
-		<to>33</to>
-		<read></read>
-	</transition>
-	<transition>
-		<from>32</from>
-		<to>31</to>
-		<read>b</read>
-	</transition>
-	<transition>
-		<from>31</from>
-		<to>963</to>
-		<read>a</read>
-	</transition>
-	<transition>
-		<from>31</from>
-		<to>33</to>
-		<read>b</read>
-	</transition>
-	</automaton>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
+	<type>fa</type>&#13;
+	<automaton>&#13;
+		<!--The list of states.-->&#13;
+		<state id="31" name="[0]">&#13;
+			<x>67.0</x>&#13;
+			<y>20.0</y>&#13;
+			<final/>&#13;
+		</state>&#13;
+		<state id="32" name="[1]">&#13;
+			<x>71.0</x>&#13;
+			<y>154.0</y>&#13;
+			<final/>&#13;
+		</state>&#13;
+		<state id="33" name="[2]">&#13;
+			<x>137.0</x>&#13;
+			<y>85.0</y>&#13;
+			<final/>&#13;
+		</state>&#13;
+		<state id="963" name="[0, 2]">&#13;
+			<x>220.0</x>&#13;
+			<y>18.0</y>&#13;
+			<final/>&#13;
+		</state>&#13;
+		<state id="29824" name="[0, 1, 2]">&#13;
+			<x>398.0</x>&#13;
+			<y>17.0</y>&#13;
+			<final/>&#13;
+		</state>&#13;
+		<!--The list of transitions.-->&#13;
+		<transition>&#13;
+			<from>963</from>&#13;
+			<to>29824</to>&#13;
+			<read>a</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>29824</from>&#13;
+			<to>29824</to>&#13;
+			<read>a</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>31</from>&#13;
+			<to>33</to>&#13;
+			<read>b</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>29824</from>&#13;
+			<to>963</to>&#13;
+			<read>b</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>963</from>&#13;
+			<to>33</to>&#13;
+			<read>b</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>31</from>&#13;
+			<to>963</to>&#13;
+			<read>a</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>33</from>&#13;
+			<to>32</to>&#13;
+			<read>a</read>&#13;
+		</transition>&#13;
+		<transition>&#13;
+			<from>32</from>&#13;
+			<to>31</to>&#13;
+			<read>b</read>&#13;
+		</transition>&#13;
+	</automaton>&#13;
 </structure>
