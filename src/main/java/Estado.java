@@ -33,7 +33,7 @@ public class Estado {
         this.nome = nome;
     }
 
-    public Boolean getInicial() {
+    public Boolean isInicial() {
         return inicial;
     }
 
