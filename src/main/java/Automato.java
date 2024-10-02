@@ -1,11 +1,10 @@
 package main.java;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Automato {
 
-    private List<Estado> estados;
-    private List<Transicao> transicoes;
+    private ArrayList<Estado> estados;
+    private ArrayList<Transicao> transicoes;
 
     public Automato() {
         this.estados = new ArrayList<>();
@@ -20,11 +19,11 @@ public class Automato {
         this.transicoes.add(transicao);
     }
 
-    public List<Estado> getEstados() {
+    public ArrayList<Estado> getEstados() {
         return estados;
     }
 
-    public List<Transicao> getTransicoes() {
+    public ArrayList<Transicao> getTransicoes() {
         return transicoes;
     }
 

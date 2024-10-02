@@ -5,23 +5,23 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.NodeList; 
 
-public class LerArquivoAFN {
-    public Automato LerAFN() {
+public class LerArquivoAFD {
+    public Automato LerAFD() {
 
         Automato automatoAFN = new Automato();
         try {
-            File file = new File("automatoN.jff");
+            File file = new File("automatoD.jff");
             /*Serve para criar uma nova instancia de DocumentBuild, sendo ele responsavel pela 
              * construção e processamento de arquivos XML e a newInstance() serve para criar uma
              * nova instancia do documento com as configurações padrões*/
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
             /*Comverte o XML em uma estrutura de árvore em memória*/
-            DocumentBuilder construtorN = dbFactory.newDocumentBuilder();
-            Document Afn = construtorN.parse(file);
+            DocumentBuilder construtorD = dbFactory.newDocumentBuilder();
+            Document Afd = construtorD.parse(file);
 
-            NodeList listaEstados = Afn.getElementsByTagName("state");
+            NodeList listaEstados = Afd.getElementsByTagName("state");
             
             for (int i = 0; i < listaEstados.getLength(); i++) {
                 Node noEstado = listaEstados.item(i);
@@ -44,7 +44,7 @@ public class LerArquivoAFN {
                 }
             }
 
-            NodeList listaTransicoes = Afn.getElementsByTagName("transition");
+            NodeList listaTransicoes = Afd.getElementsByTagName("transition");
             for (int i = 0; i < listaTransicoes.getLength(); i++) {
                 Node noTransicao = listaTransicoes.item(i);
 

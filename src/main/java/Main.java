@@ -1,11 +1,10 @@
 package main.java;
 public class Main {
-
     public static void main(String[] args) {
-        ConversorAFNparaAFD conversorAFNparaAFD = new ConversorAFNparaAFD();
-        
-        Automato afd = conversorAFNparaAFD.getAFD();
+        Automato afd = new LerArquivoAFD().LerAFD();
 
-        afd.salvarEmArquivo("automato.jff");
+        for (Estado q1 ) {
+            
+        }
     }
 }
