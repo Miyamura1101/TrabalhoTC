@@ -13,6 +13,7 @@ public class Main {
             lista.finall();
         }
         equivalente();
+        l
 
 
     }
@@ -28,6 +29,7 @@ public class Main {
                     }
                 }
             }
+        
         }
        }
     }
@@ -35,6 +37,18 @@ public class Main {
         for (ListaMinimizacao lisat : list) {
             if (transicao1.getEstado_Final() == lisat.getId_1() && transicoes2.getEstado_Final() == lisat.getId_2()) {
                 lisat.listadd(lisat);
+            }
+        }
+    }
+    public static void lsi(){
+        for (ListaMinimizacao lista : list) {
+            if (!lista.isEquivalente()) {
+                 if (lista.getTransicao_revisao() != null) {
+                    for (ListaMinimizacao listaMinimizacao : lista.getTransicao_revisao()) {
+                        listaMinimizacao.setEquivalente(false);
+                        lsi();
+                    }
+                }
             }
         }
     }
