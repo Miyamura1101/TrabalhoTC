@@ -13,7 +13,7 @@ public class Main {
             lista.finall();
         }
         equivalente();
-        l
+        lsi();
 
 
     }
@@ -41,12 +41,14 @@ public class Main {
         }
     }
     public static void lsi(){
+        ArrayList<ListaMinimizacao> visitados = new ArrayList<>();
         for (ListaMinimizacao lista : list) {
-            if (!lista.isEquivalente()) {
+            if (!lista.isEquivalente() && !visitados.contains(lista)) {
+                visitados.add(lista); // Para não entrar na celula duas vezes
+
                  if (lista.getTransicao_revisao() != null) {
                     for (ListaMinimizacao listaMinimizacao : lista.getTransicao_revisao()) {
                         listaMinimizacao.setEquivalente(false);
-                        lsi();
                     }
                 }
             }
