@@ -11,7 +11,7 @@ public class ListaMinimizacao {
     private ArrayList<ListaMinimizacao> transicao_revisao = new ArrayList<>();
     private boolean finall_1;
     private boolean finall_2;
-    private boolean equivalente;
+    private boolean equivalente = true;
     
     public int getId_1() {
         return id_1;
