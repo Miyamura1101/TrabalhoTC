@@ -37,9 +37,8 @@ public class minimizacao {
     public void ChecarCelularRestantes(){
         for (ListaMinimizacao lista : list) {
             if (lista.isEquivalente()) {
-                if (lista.getTransicao_1().equals(lista.getTransicao_2())) {
-                    {
-                }
+                
+                
             }
         }
     }
