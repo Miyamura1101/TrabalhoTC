@@ -38,11 +38,20 @@ public class minimizacao {
         for (ListaMinimizacao lista : list) {
             if (lista.isEquivalente()) {
                 
+                for (Transicao transicao1 : lista.getTransicao_1()) {
+                    for (Transicao transicao2 : lista.getTransicao_2()) {
+                        if (transicao1.getSimbulo() == transicao2.getSimbulo()) {
+                            if (transicao1.getEstado_Final() != transicao2.getEstado_Final()) {
+                                lista.getTransicao_revisao().add(lista);
+                            }
+                        } 
+                    }
+                }
                 
             }
         }
     }
-}
+
     public void lsi(){
         ArrayList<ListaMinimizacao> visitados = new ArrayList<>();
         for (ListaMinimizacao lista : list) {
