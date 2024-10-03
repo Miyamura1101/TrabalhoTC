@@ -11,7 +11,8 @@ public class ListaMinimizacao {
     private ArrayList<ListaMinimizacao> transicao_revisao = new ArrayList<>();
     private boolean finall_1;
     private boolean finall_2;
-    private boolean equivalente = true;
+    private boolean equivalente;
+    
     public int getId_1() {
         return id_1;
     }
@@ -78,8 +79,5 @@ public class ListaMinimizacao {
         }else{
             equivalente = true;
         }
-    }
-    public void equivalente(){
-        
     }
 }
