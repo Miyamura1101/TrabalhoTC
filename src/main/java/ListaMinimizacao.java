@@ -72,12 +72,21 @@ public class ListaMinimizacao {
         this.transicao_2 = transicaos2;
         this.finall_1 = finall_1;
         this.finall_2 = finall_2;
+        this.equivalente = true;
     } 
     public void finall(){
         if (finall_1 != finall_2) {
             equivalente = false;
         }else{
             equivalente = true;
+        }
+    }
+        ///     Marca metodos Trivialmente não equivalentes
+    public void marcarTrivialmenteNaoEquivalente(ArrayList<ListaMinimizacao> listaMinimizacao){
+        for(ListaMinimizacao lista : listaMinimizacao){
+            if(lista.isFinall_1() != lista.isFinall_2()){
+                lista.setEquivalente(false); //     Não equivalente
+            }
         }
     }
 }
