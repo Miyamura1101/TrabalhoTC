@@ -6,6 +6,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList; 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LerArquivoAFD {
     public Automato LerAFD() {
@@ -69,4 +71,31 @@ public class LerArquivoAFD {
             return null;
         }
     }
+
+    public String abrirExploradorDeArquivos() {
+        try {
+            //     Aqui temos um filtro para aceitar apenas arquivos .jff
+            FileNameExtensionFilter arqFiltro = new FileNameExtensionFilter("Somente arquivos .jff", "jff");
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.addChoosableFileFilter(arqFiltro);
+            fileChooser.setDialogTitle("Selecione um arquivo JFLAP (.jff)");
+
+            //      Caixa de diálogo para seleção de arquivo
+            if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                File arquivo = fileChooser.getSelectedFile();
+                String caminho = "file:///" + arquivo.getAbsolutePath(); // Caminho
+                return caminho;
+            } else {
+                System.out.println("Nenhum arquivo selecionado");
+                return null; // Caso o usuário cancele a seleção
+            }
+        } catch (Exception v) {
+            System.out.println("Erro: !!!! " + v);
+            return null;
+        }
+    }
+
+    
+
 }
