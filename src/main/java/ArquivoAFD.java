@@ -43,8 +43,8 @@ public class ArquivoAFD {
 
                     /*getAttribute é usado para o valor de atributo dentro de uma tag (id = 1) */
                     
-                    boolean inicial = elementEstado.getAttribute("initial") == "initial"; // Não checa se é inicial -> só colcoca falso
-                    boolean finall = elementEstado.getAttribute("final") != null; // Não checa se é final -> só colcoca verdadeiro
+                    boolean inicial = elementEstado.getElementsByTagName("initial").getLength() > 0; // Não checa se é inicial -> só colcoca falso
+                    boolean finall = elementEstado.getElementsByTagName("final").getLength() > 0; // Não checa se é final -> só colcoca verdadeiro
 
                     Estado estado = new Estado(id, nome, inicial, finall, i, id);
 
