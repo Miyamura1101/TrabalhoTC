@@ -4,11 +4,16 @@ import java.util.ArrayList;
 public class Automato {
 
     private ArrayList<Estado> estados;
-    private ArrayList<Transicao> transicoes;
+    private ArrayList<Transicao> transicoes; 
 
     public Automato() {
         this.estados = new ArrayList<>();
         this.transicoes = new ArrayList<>();
+    }
+
+    public Automato(ArrayList<Estado> estados, ArrayList<Transicao> transicoes) {
+        this.estados = estados;
+        this.transicoes = transicoes;
     }
 
     public void addEstado(Estado estado){

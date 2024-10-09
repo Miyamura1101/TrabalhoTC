@@ -6,7 +6,15 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
 
-        minimizacao minimizacao = new minimizacao();
+        
+        ArquivoAFD afd = new ArquivoAFD();
+        Automato afds = afd.LerAFD();
+        Minimizacao_Teste minimizacao_Teste = new Minimizacao_Teste(afds.getEstados(), afd.getAlfabeto(), afds.getTransicoes(), afd.getEstadoInical(), afd.getEstadosFinais());
+
+        Automato automatoMinimizado = minimizacao_Teste.minimizar();
+
+        automatoMinimizado.salvarEmArquivo("teste.jff");
+        
             abrirExploradorDeArquivos();
         }
     

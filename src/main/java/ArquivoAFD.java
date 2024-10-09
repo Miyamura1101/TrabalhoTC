@@ -1,5 +1,7 @@
 package main.java;
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -9,9 +11,13 @@ import org.w3c.dom.NodeList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class LerArquivoAFD {
-    public Automato LerAFD() {
+public class ArquivoAFD {
+    private ArrayList<String> alfabeto = new ArrayList<String>();
+    private ArrayList<Estado> estadosFinais = new ArrayList<Estado>();
+    private Estado estadoInical;
 
+    public Automato LerAFD() {
+       
         Automato automatoAFN = new Automato();
         try {
             File file = new File("automatoD.jff");
@@ -37,10 +43,17 @@ public class LerArquivoAFD {
 
                     /*getAttribute é usado para o valor de atributo dentro de uma tag (id = 1) */
                     
-                    boolean inicial = elementEstado.getAttribute("initial") != null;
-                    boolean finall = elementEstado.getAttribute("final") != null; 
+                    boolean inicial = elementEstado.getAttribute("initial") == "initial"; // Não checa se é inicial -> só colcoca falso
+                    boolean finall = elementEstado.getAttribute("final") != null; // Não checa se é final -> só colcoca verdadeiro
 
                     Estado estado = new Estado(id, nome, inicial, finall, i, id);
+
+                    if (finall) {
+                        estadosFinais.add(estado);
+                    }
+                    if (inicial) {
+                        estadoInical = estado;
+                    }
 
                     automatoAFN.addEstado(estado);
                 }
@@ -59,6 +72,10 @@ public class LerArquivoAFD {
                     int estado_Final = Integer.parseInt(elementoTransicao.getElementsByTagName("to").item(0).getTextContent());
                     String simbulo = elementoTransicao.getElementsByTagName("read").item(0).getTextContent();
 
+                    if (Procurar(simbulo)) {
+                        alfabeto.add(simbulo);
+                    }
+                    
                     Transicao transicao = new Transicao(estado_Inicial, estado_Final, simbulo);
                     automatoAFN.addTransicoe(transicao);
                 }
@@ -70,6 +87,27 @@ public class LerArquivoAFD {
             System.out.println("Deu algo de errado, porfavor tentar novamente !!!!");
             return null;
         }
+    }
+
+    public ArrayList<String> getAlfabeto() {
+        return alfabeto;
+    }
+    
+    public ArrayList<Estado> getEstadosFinais() {
+        return estadosFinais;
+    }
+
+    public Estado getEstadoInical() {
+        return estadoInical;
+    }
+
+    public Boolean Procurar(String simbulo){
+        for (String alfabet : alfabeto) {
+            if (alfabet == simbulo) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String abrirExploradorDeArquivos() {
@@ -95,7 +133,4 @@ public class LerArquivoAFD {
             return null;
         }
     }
-
-    
-
 }
