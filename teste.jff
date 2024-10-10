@@ -20,6 +20,51 @@
 	</transition>
 	<transition>
 		<from>0</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>0</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>0</from>
 		<to>0</to>
 		<read>a</read>
 	</transition>
@@ -45,17 +90,57 @@
 	</transition>
 	<transition>
 		<from>0</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>0</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>1</from>
 		<to>1</to>
 		<read>b</read>
 	</transition>
 	<transition>
-		<from>0</from>
+		<from>1</from>
 		<to>0</to>
 		<read>a</read>
 	</transition>
 	<transition>
 		<from>1</from>
 		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>0</to>
+		<read>a</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>0</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>1</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>0</to>
+		<read>b</read>
+	</transition>
+	<transition>
+		<from>1</from>
+		<to>1</to>
 		<read>b</read>
 	</transition>
 	<transition>
@@ -75,18 +160,13 @@
 	</transition>
 	<transition>
 		<from>1</from>
-		<to>0</to>
+		<to>1</to>
 		<read>b</read>
 	</transition>
 	<transition>
 		<from>1</from>
 		<to>0</to>
 		<read>a</read>
-	</transition>
-	<transition>
-		<from>1</from>
-		<to>0</to>
-		<read>b</read>
 	</transition>
 	<transition>
 		<from>1</from>

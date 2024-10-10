@@ -25,7 +25,7 @@ public class Minimizacao_Teste {
         for (Transicao transicao : transicoes) {
             if (transicao.getSimbulo().equals(simbulo)) {
                 if (transicao.getEstado_Inicial() == Id_Origem) {
-                    return transicao.getEstado_Inicial();
+                    return transicao.getEstado_Final();
                 }
             }
         }
@@ -46,7 +46,7 @@ public class Minimizacao_Teste {
         conjunto.add(estadosFinais); // G2
 
         boolean refinado = true;
-        while (refinado) {
+        do{
             refinado = false;
             ArrayList<ArrayList<Estado>> novoConjunto = new ArrayList<ArrayList<Estado>>();
 
@@ -65,23 +65,32 @@ public class Minimizacao_Teste {
                     novoConjunto.add(subGrupo);
                     grupo.removeAll(subGrupo);
                 }
-                System.out.println(grupo);
+               
+
+                if (!grupo.isEmpty()) {
+                    novoConjunto.add(grupo);
+                }
 
             }
             if (!novoConjunto.isEmpty()) {
                 conjunto = novoConjunto;
             }
-        }
+        }while(refinado);
         return contruirAutomatoMinimizado(conjunto);
     }
-
+/*Tenho que rever a logica desse metodo -- está completamente maluca */
     public boolean podeSerRefinado(Estado estado, ArrayList<Estado> grupoAtual, ArrayList<ArrayList<Estado>> Conjunto){
+  
         for (String simbolo : alfabeto) {
-            int destino = DestinoPelaOrigem(simbolo, estado.getId()); ///
-            for (ArrayList<Estado> grupo : Conjunto) {
-
-                if (!estaNoConjunto(destino, idsDoGrupo(grupo))) { // Pode está com a logica mau formada
-                    return true;
+            int destino = DestinoPelaOrigem(simbolo, estado.getId());
+            if (destino == -1) { // Correto != -1 -- O que funciona == -1 
+                for (ArrayList<Estado> grupo : Conjunto) {
+                    if (estaNoConjunto(destino, idsDoGrupo(grupo))) {
+                        
+                        if (!grupoAtual.contains(estados.get(destino))) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -114,6 +123,7 @@ public class Minimizacao_Teste {
                     int destino = DestinoPelaOrigem(simbulo, estado.getId());
                     
                     for (int j = 0; j < Conjunto.size(); j++) {
+                        
                         if (EncontarDestino(Conjunto.get(j), destino)) {
                             Transicao novaTransicao = new Transicao(estadoMinimmizado.getId(),IdMinimizado(j).getId(), simbulo);
                             transicoesMinimizados.add(novaTransicao);
