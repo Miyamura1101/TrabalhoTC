@@ -9,13 +9,11 @@ public class Estado {
     private double x; // Coordenada no JFLAP
     private double y; // Coordenada no JFLAP
 
-    public Estado(int id, String nome, boolean inicial, boolean finall, double x, double y) {
+    public Estado(int id, String nome, boolean inicial, boolean finall) {
         this.id = id;
         this.nome = nome;
         this.inicial = inicial;
         this.finall = finall;
-        this.x = x;
-        this.y = y;
     }
 
     public int getId() {
@@ -55,7 +53,7 @@ public class Estado {
     }
 
     public void setX(double x) {
-        this.x = x;
+        this.x = 300;
     }
 
     public double getY() {
@@ -63,7 +61,7 @@ public class Estado {
     }
 
     public void setY(double y) {
-        this.y = y;
+        this.y = 300;
     }
 
     // Método para exportar estado como XML

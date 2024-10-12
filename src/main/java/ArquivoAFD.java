@@ -55,7 +55,7 @@ public class ArquivoAFD {
                     boolean inicial = elementEstado.getElementsByTagName("initial").getLength() > 0;
                     boolean finall = elementEstado.getElementsByTagName("final").getLength() > 0; 
 
-                    Estado estado = new Estado(id, nome, inicial, finall, i, id);
+                    Estado estado = new Estado(id, nome, inicial, finall);
 
                     if (finall) {
                         estadosFinais.add(estado);
@@ -111,12 +111,10 @@ public class ArquivoAFD {
     }
 
     public Boolean Procurar(String simbulo){
-        for (String alfabet : alfabeto) {
-            if (alfabet == simbulo) {
-                return false;
-            }
+        if (!alfabeto.contains(simbulo)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public String abrirExploradorDeArquivos() {

@@ -33,6 +33,10 @@ public class Minimizacao_Conjunto {
     }
 
     public Automato minimizar(){
+        // Eleminar os estados mortos
+
+        EliminarEstadosMortos();
+
         //Separar, em grupos, os estados não finais do estados finais
 
         ArrayList<ArrayList<Estado>> conjunto = separarEstadosEmGrupos();
@@ -54,7 +58,7 @@ public class Minimizacao_Conjunto {
 
             for (ArrayList<Estado> grupo : conjunto) {
             ArrayList<Estado> subGrupo = new ArrayList<>();
-              System.out.println(grupo);
+
                 for (Estado estado : grupo) {
 
                     if (podeSerRefinado(estado, grupo, conjunto)) {
@@ -66,19 +70,13 @@ public class Minimizacao_Conjunto {
                     }
                     
                 }
-                System.out.println("oi0000000000");
-                System.out.println(grupo);
                 if (!subGrupo.isEmpty()) {
                     refinado = true;
                     grupo.removeAll(subGrupo);
                     novoConjunto.add(subGrupo);
-                    System.out.println("oi");
                 }
             }
-            //System.out.println(conjunto);
             conjunto.addAll(novoConjunto);
-            //System.out.println(conjunto);
-
         }while(refinado);
     }
 
@@ -139,25 +137,26 @@ public class Minimizacao_Conjunto {
     public Automato contruirAutomatoMinimizado(ArrayList<ArrayList<Estado>> Conjunto){
         int id = 0;
         for (ArrayList<Estado> grupo : Conjunto) {
-            Estado estado = new Estado(id, "q"+id, Inicial(grupo), Final(grupo), 300, 300);
+            Estado estado = new Estado(id, "q"+id, Inicial(grupo), Final(grupo));
             estadosMinimizados.add(estado);
             
             id++;
         }
 
         for (int i = 0; i < Conjunto.size(); i++) {
-            ArrayList<Estado> grupo = Conjunto.get(i);
+           ArrayList<Estado> grupo = Conjunto.get(i);
             Estado estadoMinimmizado = estadosMinimizados.get(i);
-            for (String simbulo : alfabeto) {
-                
-                    int destino = DestinoPelaOrigem(simbulo, grupo.get(0).getId());
-                    
+
                     for (int j = 0; j < Conjunto.size(); j++) {
-                        
-                        if (EncontarDestino(Conjunto.get(j), destino)) {
-                            Transicao novaTransicao = new Transicao(estadoMinimmizado.getId(),IdMinimizado(j).getId(), simbulo);
-                            transicoesMinimizados.add(novaTransicao);
+
+                        for (String simbulo : alfabeto) {
+                            int destino = DestinoPelaOrigem(simbulo, grupo.get(0).getId());
+                            
+                        if (EncontarDestino(Conjunto.get(j), destino) ) {
+                                Transicao novaTransicao = new Transicao(estadoMinimmizado.getId(),IdMinimizado(j).getId(), simbulo);
+                                transicoesMinimizados.add(novaTransicao);   
                         }
+                        
                     }
             }
         }
@@ -212,5 +211,90 @@ public class Minimizacao_Conjunto {
     // Eliminar os estados mortos
     public void EliminarEstadosMortos(){
         
+        ArrayList<Integer> estadoAcessiveis = new ArrayList<Integer>();
+         identificarEstadosAcessiveis(estadoInicial, estadoAcessiveis);
+
+        ArrayList<Integer> estadosMortos = new ArrayList<Integer>();
+        for (Estado estado : estadosFinais) {
+            indentificarEstadosQueAlcancamFinal(estado, estadosMortos);
+        }
+        ArrayList<Estado> estadosRemover = new ArrayList<Estado>();
+
+        System.out.println(estadoAcessiveis);
+        System.out.println(estadosMortos);
+        for (Estado estado : estados) {
+            if (!estadoAcessiveis.contains(estado.getId())) {
+                estadosRemover.add(estado);
+            }
+        }
+        for (Estado estado : estados) {
+            if (!estadosMortos.contains(estado.getId())) {
+                estadosRemover.add(estado);
+            }
+        }
+        estados.removeAll(estadosRemover);
+        System.out.println(estados);
+        todasTransicoesMortas(estadosRemover);
     }
+
+    public void todasTransicoesMortas(ArrayList<Estado> estadosMortos){
+        ArrayList<Transicao> transicoesMortas = new ArrayList<Transicao>();
+        for (Transicao transicao : transicoes) {
+            for (Estado estado : estadosMortos) {
+                if (estado.getId() == transicao.getEstado_Inicial() || estado.getId() == transicao.getEstado_Final()) {
+                    transicoesMortas.add(transicao);
+                }
+            }
+            
+        }
+        transicoes.remove(transicoesMortas);
+    }
+
+    public void identificarEstadosAcessiveis(Estado estado, ArrayList<Integer> estadosAcessiveis){
+        if (estadosAcessiveis.contains(estado.getId())) {
+            return;
+        }
+        
+        estadosAcessiveis.add(estado.getId());
+
+        for (Transicao transicao : transicoes) {
+            if (transicao.getEstado_Inicial() == estado.getId()) {
+                Estado destino = getEstadoId(transicao.getEstado_Final());
+
+                if (destino != null) {
+                    identificarEstadosAcessiveis(destino, estadosAcessiveis);
+                }
+
+            }
+        }
+    }
+
+    public void indentificarEstadosQueAlcancamFinal(Estado estado, ArrayList<Integer> estadosQueAlcancamFinal){
+        if (estadosQueAlcancamFinal.contains(estado.getId())) {
+            return;
+        }
+
+        estadosQueAlcancamFinal.add(estado.getId());
+
+        for (Transicao transicao : transicoes) {
+            System.out.println(transicao.getEstado_Final());
+            if (transicao.getEstado_Final() == estado.getId()) {
+                Estado origem = getEstadoId(transicao.getEstado_Inicial());
+                if (origem != null) {
+                    indentificarEstadosQueAlcancamFinal(origem, estadosQueAlcancamFinal);
+                }
+            }
+        }
+    }
+
+    private Estado getEstadoId(int id){
+        for (Estado estado : estados) {
+            if (estado.getId() == id) {
+                return estado;
+            }
+        }
+        return null;
+    }
+
+
 }   

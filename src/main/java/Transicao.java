@@ -1,4 +1,6 @@
 package main.java;
+
+import java.util.Objects;
 public class Transicao {
 
     private int estado_Inicial; // Referente ao estado de origem
@@ -51,5 +53,19 @@ public class Transicao {
         construtor.append("\t\t<read>").append(simbulo).append("</read>\n");
         construtor.append("\t</transition>\n");
         return construtor.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transicao that = (Transicao) o;
+        return estado_Inicial == that.estado_Inicial &&
+               estado_Final == that.estado_Final &&
+               Objects.equals(simbulo, that.simbulo);
+    }
+    @Override
+    public int hashCode(){
+        return Objects.hash(estado_Inicial, estado_Final, simbulo);
     }
 }
