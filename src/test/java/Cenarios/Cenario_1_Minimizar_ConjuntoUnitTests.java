@@ -71,4 +71,6 @@ public class Cenario_1_Minimizar_ConjuntoUnitTests {
         assertEquals(alfabetoEsperado.length, alfabeto.size());
     }
 
+    
+
 }

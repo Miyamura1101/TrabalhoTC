@@ -52,7 +52,9 @@ public class Minimizacao_Conjunto {
 
     private void refinarGrupos(ArrayList<ArrayList<Estado>> conjunto) {
         boolean refinado = true;
-        do{
+
+        
+       /*  do{
             refinado = false;
             ArrayList<ArrayList<Estado>> novoConjunto = new ArrayList<ArrayList<Estado>>();
 
@@ -63,7 +65,7 @@ public class Minimizacao_Conjunto {
 
                     if (podeSerRefinado(estado, grupo, conjunto)) {
                        subGrupo.add(estado);
-                       //grupo.remove(estado); /* Como está retirando o primeiro está bagunçando tudo */
+                       //grupo.remove(estado); /* Como está retirando o primeiro está bagunçando tudo *//*
                        break;
                     } else {
                         refinado = false;
@@ -77,7 +79,7 @@ public class Minimizacao_Conjunto {
                 }
             }
             conjunto.addAll(novoConjunto);
-        }while(refinado);
+        }while(refinado);*/
     }
 
     private ArrayList<ArrayList<Estado>> separarEstadosEmGrupos() {
@@ -92,21 +94,32 @@ public class Minimizacao_Conjunto {
         return conjunto;
     }
 /*Tenho que rever a logica desse metodo -- está completamente maluca */ // Resolvido
-    public boolean podeSerRefinado(Estado estado, ArrayList<Estado> grupoAtual, ArrayList<ArrayList<Estado>> Conjunto){
-            
-         for (Estado estado2 : grupoAtual) {
-            if (estado != estado2) {
-                for (String simbolo : alfabeto) {
-                    int destino = DestinoPelaOrigem(simbolo, estado.getId());
-                    int destino2 = DestinoPelaOrigem(simbolo, estado2.getId());
+    public ArrayList<Estado> podeSerRefinado(Estado estado, ArrayList<Estado> grupoAtual, ArrayList<ArrayList<Estado>> Conjunto){
+        int destino, destinoComparar;
+        ArrayList<Estado> equivalente = new ArrayList<Estado>();
 
-                    if (!estaNoConjunto(destino2, destino, Conjunto)) {
-                        return true;
+        for (Estado estado2 : grupoAtual) {
+            if (estado != estado2) {
+                boolean DestinosIguais = true;
+                for (String simbolo : alfabeto) {
+                     destino = DestinoPelaOrigem(simbolo, estado.getId());
+                     destinoComparar = DestinoPelaOrigem(simbolo, estado2.getId());
+
+                    if (!estaNoConjunto(destino, destinoComparar, Conjunto)) {
+                        DestinosIguais = false;
                     }
                 }
+                if (DestinosIguais) {
+                    if (!equivalente.contains(estado)) {
+                        equivalente.add(estado);
+                    }
+                    equivalente.add(estado2);
+                }
+                
             }
+            System.out.println(equivalente);
         }
-        return false;
+        return equivalente;
     }
 
     public boolean estaNoConjunto(int id, ArrayList<Integer> grupo){
@@ -220,8 +233,6 @@ public class Minimizacao_Conjunto {
         }
         ArrayList<Estado> estadosRemover = new ArrayList<Estado>();
 
-        System.out.println(estadoAcessiveis);
-        System.out.println(estadosMortos);
         for (Estado estado : estados) {
             if (!estadoAcessiveis.contains(estado.getId())) {
                 estadosRemover.add(estado);
@@ -233,7 +244,6 @@ public class Minimizacao_Conjunto {
             }
         }
         estados.removeAll(estadosRemover);
-        System.out.println(estados);
         todasTransicoesMortas(estadosRemover);
     }
 
