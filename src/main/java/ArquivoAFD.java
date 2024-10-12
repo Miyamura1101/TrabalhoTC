@@ -16,18 +16,27 @@ public class ArquivoAFD {
     private ArrayList<Estado> estadosFinais = new ArrayList<Estado>();
     private Estado estadoInical;
 
+    private SeletorDeArquivo seletorDeArquivo = new SeletorDeArquivo();
+
     public Automato LerAFD() {
+        //File file = new File("automatoD.jff");
+        File arquivo = seletorDeArquivo.selecionarArquivo();
+        Automato automatoMinimizado = LerAFD(arquivo);
+        return automatoMinimizado;
+    }
+
+    public Automato LerAFD(File arquivo) {
        
         Automato automatoAFN = new Automato();
+        
         try {
-            File file = new File("automatoD.jff");
             /*Serve para criar uma nova instancia de DocumentBuild, sendo ele responsavel pela 
              * construção e processamento de arquivos XML e a newInstance() serve para criar uma
              * nova instancia do documento com as configurações padrões*/
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
             /*Comverte o XML em uma estrutura de árvore em memória*/
             DocumentBuilder construtorD = dbFactory.newDocumentBuilder();
-            Document Afd = construtorD.parse(file);
+            Document Afd = construtorD.parse(arquivo);
 
             NodeList listaEstados = Afd.getElementsByTagName("state");
             
@@ -43,8 +52,8 @@ public class ArquivoAFD {
 
                     /*getAttribute é usado para o valor de atributo dentro de uma tag (id = 1) */
                     
-                    boolean inicial = elementEstado.getElementsByTagName("initial").getLength() > 0; // Não checa se é inicial -> só colcoca falso
-                    boolean finall = elementEstado.getElementsByTagName("final").getLength() > 0; // Não checa se é final -> só colcoca verdadeiro
+                    boolean inicial = elementEstado.getElementsByTagName("initial").getLength() > 0;
+                    boolean finall = elementEstado.getElementsByTagName("final").getLength() > 0; 
 
                     Estado estado = new Estado(id, nome, inicial, finall, i, id);
 

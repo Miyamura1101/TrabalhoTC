@@ -1,7 +1,7 @@
 package main.java;
 import java.util.ArrayList;
 
-public class minimizacao {
+public class minimizacao_Tabela {
 
     ArrayList<ListaMinimizacao> list = new ArrayList<>();
 
