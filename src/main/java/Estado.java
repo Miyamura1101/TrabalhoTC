@@ -16,6 +16,12 @@ public class Estado {
         this.finall = finall;
     }
 
+    public Estado(Estado estado){
+        this.id = estado.id;
+        this.nome = estado.nome;
+        this.inicial = estado.inicial;
+        this.finall = estado.finall;
+    }
     public int getId() {
         return id;
     }

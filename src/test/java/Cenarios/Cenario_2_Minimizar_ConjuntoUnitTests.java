@@ -48,11 +48,11 @@ public class Cenario_2_Minimizar_ConjuntoUnitTests {
         ArrayList<Transicao> transicaosEsperadas = new ArrayList<Transicao>();
 
        transicaosEsperadas.add(new Transicao(0, 0, "a"));
-       transicaosEsperadas.add(new Transicao(0, 1, "b"));
+       transicaosEsperadas.add(new Transicao(0, 2, "b"));
        transicaosEsperadas.add( new Transicao(1, 0, "a"));
-       transicaosEsperadas.add(new Transicao(1, 1, "b"));
-       transicaosEsperadas.add(new Transicao(2, 0, "b"));
-       transicaosEsperadas.add( new Transicao(2, 0, "a"));
+       transicaosEsperadas.add(new Transicao(1, 0, "b"));
+       transicaosEsperadas.add(new Transicao(2, 0, "a"));
+       transicaosEsperadas.add( new Transicao(2, 2, "b"));
 
         assertEquals(transicaosEsperadas.size(), automatoMinimizado.getTransicoes().size());
 

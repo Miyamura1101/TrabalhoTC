@@ -1,6 +1,10 @@
 package main.java;
 
+import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 public class Minimizacao_Conjunto {
 
     private ArrayList<Estado> estados = new ArrayList<Estado>();
@@ -43,44 +47,86 @@ public class Minimizacao_Conjunto {
 
         // Refinar os grupos. Criando novas partições até que a partição gerada seja igual a partição corrente
 
-        refinarGrupos(conjunto);
+        conjunto = identificarEstadosEquivalentes(conjunto);
     
         Automato automatoMinimizado = contruirAutomatoMinimizado(conjunto);
 
         return automatoMinimizado;
     }
 
-    private void refinarGrupos(ArrayList<ArrayList<Estado>> conjunto) {
-        boolean refinado = true;
+    
 
+    // private void refinarGrupos(ArrayList<ArrayList<Estado>> gruposDeEstadosFinaisENaoFinais) {
+        // Identificar pares de estados Equivalentes
+        //ArrayList<ArrayList<Estado>> estadosEquivalentes = identificarEstadosEquivalentes(gruposDeEstadosFinaisENaoFinais);
         
-       /*  do{
-            refinado = false;
-            ArrayList<ArrayList<Estado>> novoConjunto = new ArrayList<ArrayList<Estado>>();
+        // Agrupar os estados em classes de equivalencia, com um representante
+        
+        // Criação de um novo AFD
+   // }
 
-            for (ArrayList<Estado> grupo : conjunto) {
-            ArrayList<Estado> subGrupo = new ArrayList<>();
+    private ArrayList<ArrayList<Estado>> identificarEstadosEquivalentes(
+            ArrayList<ArrayList<Estado>> gruposDeEstadosFinaisENaoFinais) {
 
-                for (Estado estado : grupo) {
+                ArrayList<ArrayList<Estado>> gruposEquivalentes = new ArrayList<>();
+                ArrayList<ArrayList<Estado>> conjuntoCompleto = new ArrayList<>();
+                ArrayList<ArrayList<Estado>> conjuntos = new ArrayList<>();
+                Set<Estado> estadosUtilizados = new HashSet<>(); 
+         
+        boolean refinado;
+        do {
+            refinado = false;    
+       
+             for (ArrayList<Estado> grupos : gruposDeEstadosFinaisENaoFinais) {
+                for (Estado estado : grupos) {
 
-                    if (podeSerRefinado(estado, grupo, conjunto)) {
-                       subGrupo.add(estado);
-                       //grupo.remove(estado); /* Como está retirando o primeiro está bagunçando tudo *//*
-                       break;
-                    } else {
-                        refinado = false;
+                    if (estadosUtilizados.contains(estado)) {
+                        continue;
+                    }
+
+                    ArrayList<Estado> grupoEquivalentes = podeSerRefinado(estado, grupos, gruposDeEstadosFinaisENaoFinais);
+
+                    if (!grupoEquivalentes.isEmpty()) {
+
+                        ArrayList<Estado> estadosCopiados = new ArrayList<>();
+                        for (Estado estados : grupoEquivalentes) {
+                            estadosCopiados.add(new Estado(estados));
+                        }
+                        conjuntoCompleto.add(estadosCopiados);
+                        gruposEquivalentes.add(grupoEquivalentes);
+                        estadosUtilizados.addAll(grupoEquivalentes);
+                        refinado = true;
+                    
+                        break;
                     }
                     
                 }
-                if (!subGrupo.isEmpty()) {
-                    refinado = true;
-                    grupo.removeAll(subGrupo);
-                    novoConjunto.add(subGrupo);
+                if (refinado) {
+                    break;
                 }
+             }
+
+              if (!gruposEquivalentes.isEmpty()) {
+                 for (ArrayList<Estado> grupos : gruposDeEstadosFinaisENaoFinais) {
+                     grupos.removeAll(estadosUtilizados);
+                 }
+              }
+             gruposDeEstadosFinaisENaoFinais.addAll(gruposEquivalentes);
+             
+        } while (refinado);
+
+        for (ArrayList<Estado> grupo : gruposDeEstadosFinaisENaoFinais) {
+            if (!grupo.isEmpty()) {
+               for (Estado estado : grupo) {
+                 ArrayList<Estado> subgrupo = new ArrayList<>();
+                 subgrupo.add(estado);
+                 conjuntoCompleto.add(subgrupo);
+               }
             }
-            conjunto.addAll(novoConjunto);
-        }while(refinado);*/
-    }
+        }
+ 
+            return conjuntoCompleto;
+        }
 
     private ArrayList<ArrayList<Estado>> separarEstadosEmGrupos() {
         ArrayList<ArrayList<Estado>> conjunto = new ArrayList<ArrayList<Estado>>();
@@ -97,9 +143,10 @@ public class Minimizacao_Conjunto {
     public ArrayList<Estado> podeSerRefinado(Estado estado, ArrayList<Estado> grupoAtual, ArrayList<ArrayList<Estado>> Conjunto){
         int destino, destinoComparar;
         ArrayList<Estado> equivalente = new ArrayList<Estado>();
-
+        
         for (Estado estado2 : grupoAtual) {
-            if (estado != estado2) {
+
+            if (estado != estado2 && estado.getId() <= estado2.getId()) {
                 boolean DestinosIguais = true;
                 for (String simbolo : alfabeto) {
                      destino = DestinoPelaOrigem(simbolo, estado.getId());
@@ -117,8 +164,9 @@ public class Minimizacao_Conjunto {
                 }
                 
             }
-            System.out.println(equivalente);
+          
         }
+
         return equivalente;
     }
 
@@ -126,11 +174,11 @@ public class Minimizacao_Conjunto {
         return grupo.contains(id);
     }
 
-    public boolean estaNoConjunto(int destino2, int destino,ArrayList<ArrayList<Estado>> Conjunto){
+    public boolean estaNoConjunto(int destino2, int destino, ArrayList<ArrayList<Estado>> Conjunto){
         for (ArrayList<Estado> grupo : Conjunto) {
             boolean estadoGrupo = estaNoConjunto(destino, idsDoGrupo(grupo));
             boolean outroEstadoGrupo = estaNoConjunto(destino2, idsDoGrupo(grupo));
-
+           
             if (estadoGrupo && outroEstadoGrupo) {
                 return true;
             }
@@ -200,16 +248,13 @@ public class Minimizacao_Conjunto {
         return false;
     }
 
-    public boolean estaNoConjunto(ArrayList<Estado> grupo){
-        return grupo.contains(estadoInicial);
-    }
-
     public boolean Inicial(ArrayList<Estado>grupo){
-        if (estaNoConjunto(grupo)) {
-            return true;
-        }else{
-            return false;
+        for (Estado estado : grupo) {
+            if (estado.isInicial()) {
+                return true;
+            }
         }
+        return false;
     }
 
     public boolean EncontarDestino(ArrayList<Estado> grupo, int destino){
@@ -287,7 +332,6 @@ public class Minimizacao_Conjunto {
         estadosQueAlcancamFinal.add(estado.getId());
 
         for (Transicao transicao : transicoes) {
-            System.out.println(transicao.getEstado_Final());
             if (transicao.getEstado_Final() == estado.getId()) {
                 Estado origem = getEstadoId(transicao.getEstado_Inicial());
                 if (origem != null) {
