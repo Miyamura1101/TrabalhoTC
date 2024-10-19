@@ -84,6 +84,13 @@ public class ArquivoAFD {
                     if (Procurar(simbulo)) {
                         alfabeto.add(simbulo);
                     }
+
+                    try {
+                        ChecagemDeSimbuloVazio(simbulo);
+                    } catch (AutomatoAFNException e) {
+                        System.out.println(e.getMessage());
+                        System.exit(1);
+                    }
                     
                     Transicao transicao = new Transicao(estado_Inicial, estado_Final, simbulo);
                     automatoAFN.addTransicoe(transicao);
@@ -95,6 +102,12 @@ public class ArquivoAFD {
         } catch (Exception e) {
             System.out.println("Deu algo de errado, porfavor tentar novamente !!!!");
             return null;
+        }
+    }
+
+    private void ChecagemDeSimbuloVazio(String simbolo) throws AutomatoAFNException {
+        if (simbolo.isEmpty()) {
+           throw new AutomatoAFNException("Existe transições com simbulos Vazios");
         }
     }
 

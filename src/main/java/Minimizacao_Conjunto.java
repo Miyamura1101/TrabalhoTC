@@ -1,9 +1,7 @@
 package main.java;
 
-import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 public class Minimizacao_Conjunto {
 
@@ -39,7 +37,8 @@ public class Minimizacao_Conjunto {
     public Automato minimizar(){
         // Eleminar os estados mortos
 
-        EliminarEstadosMortos();
+        ExcluirEstadosMortos excluirEstadosMortos = new ExcluirEstadosMortos(estados, transicoes, estadoInicial, estadosFinais);
+        excluirEstadosMortos.EliminarEstadosMortos();
 
         //Separar, em grupos, os estados não finais do estados finais
 
@@ -54,23 +53,12 @@ public class Minimizacao_Conjunto {
         return automatoMinimizado;
     }
 
-    
-
-    // private void refinarGrupos(ArrayList<ArrayList<Estado>> gruposDeEstadosFinaisENaoFinais) {
-        // Identificar pares de estados Equivalentes
-        //ArrayList<ArrayList<Estado>> estadosEquivalentes = identificarEstadosEquivalentes(gruposDeEstadosFinaisENaoFinais);
-        
-        // Agrupar os estados em classes de equivalencia, com um representante
-        
-        // Criação de um novo AFD
-   // }
-
     private ArrayList<ArrayList<Estado>> identificarEstadosEquivalentes(
             ArrayList<ArrayList<Estado>> gruposDeEstadosFinaisENaoFinais) {
 
                 ArrayList<ArrayList<Estado>> gruposEquivalentes = new ArrayList<>();
                 ArrayList<ArrayList<Estado>> conjuntoCompleto = new ArrayList<>();
-                ArrayList<ArrayList<Estado>> conjuntos = new ArrayList<>();
+
                 Set<Estado> estadosUtilizados = new HashSet<>(); 
          
         boolean refinado;
@@ -139,7 +127,7 @@ public class Minimizacao_Conjunto {
 
         return conjunto;
     }
-/*Tenho que rever a logica desse metodo -- está completamente maluca */ // Resolvido
+
     public ArrayList<Estado> podeSerRefinado(Estado estado, ArrayList<Estado> grupoAtual, ArrayList<ArrayList<Estado>> Conjunto){
         int destino, destinoComparar;
         ArrayList<Estado> equivalente = new ArrayList<Estado>();
@@ -265,90 +253,4 @@ public class Minimizacao_Conjunto {
         }
         return false;
     }
-
-    // Eliminar os estados mortos
-    public void EliminarEstadosMortos(){
-        
-        ArrayList<Integer> estadoAcessiveis = new ArrayList<Integer>();
-         identificarEstadosAcessiveis(estadoInicial, estadoAcessiveis);
-
-        ArrayList<Integer> estadosMortos = new ArrayList<Integer>();
-        for (Estado estado : estadosFinais) {
-            indentificarEstadosQueAlcancamFinal(estado, estadosMortos);
-        }
-        ArrayList<Estado> estadosRemover = new ArrayList<Estado>();
-
-        for (Estado estado : estados) {
-            if (!estadoAcessiveis.contains(estado.getId())) {
-                estadosRemover.add(estado);
-            }
-        }
-        for (Estado estado : estados) {
-            if (!estadosMortos.contains(estado.getId())) {
-                estadosRemover.add(estado);
-            }
-        }
-        estados.removeAll(estadosRemover);
-        todasTransicoesMortas(estadosRemover);
-    }
-
-    public void todasTransicoesMortas(ArrayList<Estado> estadosMortos){
-        ArrayList<Transicao> transicoesMortas = new ArrayList<Transicao>();
-        for (Transicao transicao : transicoes) {
-            for (Estado estado : estadosMortos) {
-                if (estado.getId() == transicao.getEstado_Inicial() || estado.getId() == transicao.getEstado_Final()) {
-                    transicoesMortas.add(transicao);
-                }
-            }
-            
-        }
-        transicoes.remove(transicoesMortas);
-    }
-
-    public void identificarEstadosAcessiveis(Estado estado, ArrayList<Integer> estadosAcessiveis){
-        if (estadosAcessiveis.contains(estado.getId())) {
-            return;
-        }
-        
-        estadosAcessiveis.add(estado.getId());
-
-        for (Transicao transicao : transicoes) {
-            if (transicao.getEstado_Inicial() == estado.getId()) {
-                Estado destino = getEstadoId(transicao.getEstado_Final());
-
-                if (destino != null) {
-                    identificarEstadosAcessiveis(destino, estadosAcessiveis);
-                }
-
-            }
-        }
-    }
-
-    public void indentificarEstadosQueAlcancamFinal(Estado estado, ArrayList<Integer> estadosQueAlcancamFinal){
-        if (estadosQueAlcancamFinal.contains(estado.getId())) {
-            return;
-        }
-
-        estadosQueAlcancamFinal.add(estado.getId());
-
-        for (Transicao transicao : transicoes) {
-            if (transicao.getEstado_Final() == estado.getId()) {
-                Estado origem = getEstadoId(transicao.getEstado_Inicial());
-                if (origem != null) {
-                    indentificarEstadosQueAlcancamFinal(origem, estadosQueAlcancamFinal);
-                }
-            }
-        }
-    }
-
-    private Estado getEstadoId(int id){
-        for (Estado estado : estados) {
-            if (estado.getId() == id) {
-                return estado;
-            }
-        }
-        return null;
-    }
-
-
 }   
