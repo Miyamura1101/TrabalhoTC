@@ -2,7 +2,7 @@ package main.java;
 public class Main {
     public static void main(String[] args) {
 
-        SeletorDeArquivo seletorDeArquivo = new SeletorDeArquivo();
+       // SeletorDeArquivo seletorDeArquivo = new SeletorDeArquivo();
     
         ArquivoAFD afd = new ArquivoAFD();
         Automato afds = afd.LerAFD();
